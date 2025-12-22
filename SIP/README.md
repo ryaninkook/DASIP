@@ -13,7 +13,7 @@ SIP extends diffusion-based policies with Stochastic interpolant methods, enabli
 
 ```
 SIP/
-├── diffusion_policy/
+├── SI_policy/
 │   ├── config/              # Hydra configuration files
 │   │   └── task/            # Task-specific configs
 │   ├── dataset/             # Dataset implementations

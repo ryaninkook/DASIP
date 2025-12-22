@@ -19,12 +19,12 @@ from pathlib import Path
 # Configuration
 # =============================================================================
 
-DIFFUSION_POLICY_URL = "https://diffusion-policy.cs.columbia.edu/data"
+SI_policy_URL = "https://diffusion-policy.cs.columbia.edu/data"
 
 # Dataset URLs (from original Diffusion Policy)
 DATASETS = {
-    "pusht": f"{DIFFUSION_POLICY_URL}/training/pusht.zip",
-    "robomimic": f"{DIFFUSION_POLICY_URL}/training/robomimic.zip",
+    "pusht": f"{SI_policy_URL}/training/pusht.zip",
+    "robomimic": f"{SI_policy_URL}/training/robomimic.zip",
 }
 
 # Flow label data (classifiers, etc.) - hosted on Dropbox

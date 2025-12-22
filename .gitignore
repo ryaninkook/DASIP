@@ -2,8 +2,8 @@
 data/
 SIP/data/
 flow_label/
-diffusion_policy_l40s/
-diffusion_policy_l40s/*
+SI_policy_l40s/
+SI_policy_l40s/*
 # Outputs and logs
 outputs/
 logs/

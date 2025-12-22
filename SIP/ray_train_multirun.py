@@ -51,7 +51,7 @@ def main(config_name, config_dir, seeds, monitor_key, ray_address,
     # initialize hydra
     if config_dir is None:
         config_path_abs = pathlib.Path(__file__).parent.joinpath(
-            'diffusion_policy','config')
+            'SI_policy','config')
         config_path_rel = str(config_path_abs.relative_to(pathlib.Path.cwd()))
     else:
         config_path_rel = config_dir
@@ -88,7 +88,7 @@ def main(config_name, config_dir, seeds, monitor_key, ray_address,
             'multirun_metrics.py',
             '--input', str(output_dir),
             '--use_wandb',
-            '--project', 'diffusion_policy_metrics',
+            '--project', 'SI_policy_metrics',
             '--group', wandb_group_id
         ]
         for k in monitor_key:

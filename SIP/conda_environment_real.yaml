@@ -1,4 +1,4 @@
-name: robodiff
+name: SI_policy
 channels:
   - pytorch
   - pytorch3d

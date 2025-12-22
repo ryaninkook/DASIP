@@ -11,7 +11,7 @@ import wandb
 import yaml
 import numbers
 import scipy.ndimage as sn
-from diffusion_policy.common.json_logger import read_json_log, JsonLogger
+from SI_policy.common.json_logger import read_json_log, JsonLogger
 import logging
 
 @numba.jit(nopython=True)

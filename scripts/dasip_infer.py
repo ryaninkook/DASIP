@@ -225,7 +225,7 @@ def find_checkpoint(checkpoint_path: str, infer_from: int) -> Tuple[Path, OmegaC
 
 def load_policy(ckpt_file: Path, cfg: OmegaConf, device: str = "cuda:0"):
     """Load the policy from checkpoint."""
-    from diffusion_policy.workspace.base_workspace import BaseWorkspace
+    from SI_policy.workspace.base_workspace import BaseWorkspace
     
     # Load checkpoint
     payload = torch.load(ckpt_file, map_location=device)
@@ -350,7 +350,7 @@ def run_evaluation(
     
     Returns dict with success_rate, avg_time, total_time, etc.
     """
-    from diffusion_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
+    from SI_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
     
     # Create environment runner
     runner_cfg = cfg.task.env_runner
@@ -411,7 +411,7 @@ def run_baseline(
     max_steps: int = 400,
 ) -> Dict[str, Any]:
     """Run baseline evaluation with fixed diffusion steps."""
-    from diffusion_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
+    from SI_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
     
     # Set fixed steps
     if hasattr(policy, 'num_inference_steps'):

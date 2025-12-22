@@ -1,0 +1,17 @@
+
+
+# only start again from TS 50 for both RECT and SDE CURVE
+
+diffusion_policy/run2/run4_sh/linear/tool_hang/tool_hang_sde_curve_rect.sh
+
+
+diffusion_policy/run2/run4_sh/linear/transport/transport_linear_sde_curve_rect.sh
+
+
+diffusion_policy/run2/run4_sh/linear/square/square_linear_sde_curve_rect.sh
+
+
+diffusion_policy/run2/run4_sh/linear/blockpush/blockpush_linear_sde_curve_rect.sh
+
+
+diffusion_policy/run2/run4_sh/linear/kitchen/kitchen_linear_sde_curve_rect.sh

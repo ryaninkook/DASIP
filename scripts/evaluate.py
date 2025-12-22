@@ -202,11 +202,11 @@ class ConfigBuilder:
         OmegaConf.register_new_resolver("eval", eval, replace=True)
         
         # Load base configuration
-        cfg = OmegaConf.load("diffusion_policy/config/train_diffusion_unet_lowdim_workspace.yaml")
+        cfg = OmegaConf.load("SI_policy/config/train_diffusion_unet_lowdim_workspace.yaml")
         
         # Set task configuration
         cfg.task = {"name": f"{self.args.env}_lowdim_abs"}
-        task_cfg = OmegaConf.load(f"diffusion_policy/config/task/{cfg.task.name}.yaml")
+        task_cfg = OmegaConf.load(f"SI_policy/config/task/{cfg.task.name}.yaml")
         cfg = OmegaConf.merge(cfg, {"task": task_cfg})
         
         # Apply settings
@@ -251,14 +251,14 @@ class ConfigBuilder:
         
         # Set policy target based on path type
         if args.path_type == "DDPM":
-            cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy.DiffusionUnetLowdimPolicy"
-            cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
+            cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy.DiffusionUnetLowdimPolicy"
+            cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
         elif args.path_type == "DDIM":
-            cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy_ddim.DiffusionUnetLowdimPolicy_ddim"
-            cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
+            cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy_ddim.DiffusionUnetLowdimPolicy_ddim"
+            cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
         else:
-            cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy_flow_euler.DiffusionUnetLowdimPolicy_flow_euler"
-            cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d_flow.ConditionalUnet1D_Flow"
+            cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy_flow_euler.DiffusionUnetLowdimPolicy_flow_euler"
+            cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d_flow.ConditionalUnet1D_Flow"
         
         # Apply policy parameters
         cfg.policy.path_type = args.path_type
@@ -295,10 +295,10 @@ class ConfigBuilder:
         
         # Set runner target based on environment
         if args.env == "pusht":
-            cfg.task.env_runner._target_ = "diffusion_policy.env_runner.pusht_keypoints_runner_classifier_total.PushTKeypointsRunner"
+            cfg.task.env_runner._target_ = "SI_policy.env_runner.pusht_keypoints_runner_classifier_total.PushTKeypointsRunner"
         else:
             cfg.task.env_runner.dataset_path = f"./data/robomimic/datasets/{args.env}/ph/low_dim_abs.hdf5"
-            cfg.task.env_runner._target_ = "diffusion_policy.env_runner.robomimic_lowdim_runner_classifier_total.RobomimicLowdimRunner"
+            cfg.task.env_runner._target_ = "SI_policy.env_runner.robomimic_lowdim_runner_classifier_total.RobomimicLowdimRunner"
         
         cfg.task.env_runner.output_dir = output_dir
         cfg.task.env_runner.n_train = 0

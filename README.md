@@ -22,7 +22,7 @@ This achieves **~2x speedup** while maintaining high success rates.
 ```bash
 # 1. Install
 conda env create -f SIP/conda_environment.yaml
-conda activate diffusion_policy
+conda activate SI_policy
 cd SIP && pip install -e . && cd ..
 
 # 2. Download data
@@ -58,7 +58,7 @@ DASIP/
 │       ├── vlm_finetune.py     # VLM fine-tuning
 │       └── models/             # VLM wrappers
 ├── SIP/                        # Core implementation
-│   ├── diffusion_policy/       # Policy models
+│   ├── SI_policy/       # Policy models
 │   │   ├── config/             # Hydra configs
 │   │   ├── model/              # Neural networks
 │   │   ├── policy/             # Policy classes

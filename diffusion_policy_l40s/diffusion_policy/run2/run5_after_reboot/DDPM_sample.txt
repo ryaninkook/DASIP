@@ -1,0 +1,11 @@
+
+
+
+# only start from DDPM 50 epoch
+
+diffusion_policy/run2/run4_sh/DDPM/transport/transport_DDPM.sh
+
+
+# only start from DDPM 50 epoch
+
+diffusion_policy/run2/run4_sh/DDPM/square/square_DDPM.sh

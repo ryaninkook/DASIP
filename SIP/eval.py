@@ -1,6 +1,6 @@
 """
 Usage:
-python eval.py --checkpoint data/image/pusht/diffusion_policy_cnn/train_0/checkpoints/latest.ckpt -o data/pusht_eval_output
+python eval.py --checkpoint data/image/pusht/SI_policy_cnn/train_0/checkpoints/latest.ckpt -o data/pusht_eval_output
 """
 #%%
 from import_basics import *
@@ -17,7 +17,7 @@ import torch
 import dill
 import wandb
 import json
-from diffusion_policy.workspace.base_workspace import BaseWorkspace
+from SI_policy.workspace.base_workspace import BaseWorkspace
 
 @click.command()
 @click.option('-c', '--checkpoint', default='data/epoch=0550-test_mean_score=0.969.ckpt',required=False)
@@ -46,7 +46,7 @@ def main(checkpoint, output_dir, device):
     policy.to(device)
     policy.eval()
     
-    # run eval v<diffusion_policy.env_runner.pusht_keypoints_runner.PushTKeypointsRunner object at 0x7f458a4c4ac0>
+    # run eval v<SI_policy.env_runner.pusht_keypoints_runner.PushTKeypointsRunner object at 0x7f458a4c4ac0>
     print("cfg.task.env_runner: ",cfg.task.env_runner,output_dir)
     env_runner = hydra.utils.instantiate(
         cfg.task.env_runner,

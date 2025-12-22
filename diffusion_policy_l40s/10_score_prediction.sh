@@ -1,0 +1,41 @@
+
+
+python diffusion_policy/run4/a2_unified_both_lowdim_abs.py \
+    --config-path=../config \
+    --config-name=train_diffusion_unet_lowdim_workspace.yaml \
+    task=square_lowdim_abs  \
+    logging.name=square_lowdim_abs \
+    logging.project=v13_square_train_Linear_noise_uniform_Tconti_t_minus_one_seed1M \
+    +training.architecture=unet \
+    dataloader.num_workers=0 \
+    +training.save_50=True \
+    +training.save_from=0.0 \
+    policy._target_=diffusion_policy.policy.diffusion_unet_lowdim_policy_flow_euler.DiffusionUnetLowdimPolicy_flow_euler \
+    policy.model._target_=diffusion_policy.model.diffusion.conditional_unet1d_flow.ConditionalUnet1D_Flow \
+    +training.save_path=v13_square_train_Linear_noise_uniform_Tconti_t_minus_one_seed1M \
+    training.resume=False \
+    +policy.prediction=noise \
+    +policy.path_type=Linear \
+    +policy.ODE_SDE=ODE \
+    +policy.DDPM=Euler \
+    +policy.diffusion_form=. \
+    +policy.WSCALE=1000 \
+    +policy.T=100 \
+    +policy.model.T=100 \
+    +policy.model.t_minus_one=t_minus_one \
+    +policy.T_CHANGED=True \
+    +policy.model.T_CHANGED=True \
+    +policy.TS=2 \
+    +policy.last_step=. \
+    +policy.last_step_size=. \
+    +policy.train_eps=0 \
+    +policy.sample_eps=0 \
+    +policy.Tsam=uniform \
+    +policy.Ssam=uniform \
+    +policy.Tdiscrete=Tconti \
+    training.seed=1000000 \
+    training.num_epochs=5000 \
+    +policy.beta_params=[1.5,1.0] \
+    +policy.beta_scaling=0.999 \
+    +training.training=True \
+    +training.infer_from=0

@@ -52,16 +52,16 @@ sys.path.insert(0, ROOT_DIR)
 os.chdir(ROOT_DIR)
 
 from torch.utils.data import DataLoader
-from diffusion_policy.common.pytorch_util import dict_apply, optimizer_to
-from diffusion_policy.workspace.base_workspace import BaseWorkspace
-from diffusion_policy.policy.diffusion_unet_lowdim_policy_flow_euler import DiffusionUnetLowdimPolicy_flow_euler
-from diffusion_policy.policy.diffusion_unet_lowdim_policy import DiffusionUnetLowdimPolicy
-from diffusion_policy.policy.diffusion_unet_lowdim_policy_ddim import DiffusionUnetLowdimPolicy_ddim
-from diffusion_policy.dataset.base_dataset import BaseLowdimDataset
-from diffusion_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
-from diffusion_policy.common.checkpoint_util import TopKCheckpointManager
-from diffusion_policy.common.json_logger import JsonLogger
-from diffusion_policy.model.common.lr_scheduler import get_scheduler
+from SI_policy.common.pytorch_util import dict_apply, optimizer_to
+from SI_policy.workspace.base_workspace import BaseWorkspace
+from SI_policy.policy.diffusion_unet_lowdim_policy_flow_euler import DiffusionUnetLowdimPolicy_flow_euler
+from SI_policy.policy.diffusion_unet_lowdim_policy import DiffusionUnetLowdimPolicy
+from SI_policy.policy.diffusion_unet_lowdim_policy_ddim import DiffusionUnetLowdimPolicy_ddim
+from SI_policy.dataset.base_dataset import BaseLowdimDataset
+from SI_policy.env_runner.base_lowdim_runner import BaseLowdimRunner
+from SI_policy.common.checkpoint_util import TopKCheckpointManager
+from SI_policy.common.json_logger import JsonLogger
+from SI_policy.model.common.lr_scheduler import get_scheduler
 from diffusers.training_utils import EMAModel
 
 
@@ -532,9 +532,9 @@ class InferenceWorkspace(BaseWorkspace):
         # Configure env runner
         cfg.task.env_runner.test_start_seed = cfg.training.seed
         if 'push' in cfg.task.name:
-            cfg.task.env_runner._target_ = 'diffusion_policy.env_runner.pusht_keypoints_runner_classifier.PushTKeypointsRunner'
+            cfg.task.env_runner._target_ = 'SI_policy.env_runner.pusht_keypoints_runner_classifier.PushTKeypointsRunner'
         else:
-            cfg.task.env_runner._target_ = 'diffusion_policy.env_runner.robomimic_lowdim_runner_classifier.RobomimicLowdimRunner'
+            cfg.task.env_runner._target_ = 'SI_policy.env_runner.robomimic_lowdim_runner_classifier.RobomimicLowdimRunner'
         
         # Initialize wandb
         if not self.args.no_wandb:
@@ -649,11 +649,11 @@ def build_config(args: argparse.Namespace) -> OmegaConf:
     OmegaConf.register_new_resolver("eval", eval, replace=True)
     
     # Load base config
-    cfg = OmegaConf.load("diffusion_policy/config/train_diffusion_unet_lowdim_workspace.yaml")
+    cfg = OmegaConf.load("SI_policy/config/train_diffusion_unet_lowdim_workspace.yaml")
     
     # Set task
     cfg.task = {"name": f"{args.env}_lowdim_abs"}
-    task_cfg = OmegaConf.load(f"diffusion_policy/config/task/{cfg.task.name}.yaml")
+    task_cfg = OmegaConf.load(f"SI_policy/config/task/{cfg.task.name}.yaml")
     cfg = OmegaConf.merge(cfg, {"task": task_cfg})
     
     # Logging
@@ -674,14 +674,14 @@ def build_config(args: argparse.Namespace) -> OmegaConf:
     
     # Policy target based on path type
     if args.path_type == "DDPM":
-        cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy.DiffusionUnetLowdimPolicy"
-        cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
+        cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy.DiffusionUnetLowdimPolicy"
+        cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
     elif args.path_type == "DDIM":
-        cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy_ddim.DiffusionUnetLowdimPolicy_ddim"
-        cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
+        cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy_ddim.DiffusionUnetLowdimPolicy_ddim"
+        cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d.ConditionalUnet1D"
     else:
-        cfg.policy._target_ = "diffusion_policy.policy.diffusion_unet_lowdim_policy_flow_euler.DiffusionUnetLowdimPolicy_flow_euler"
-        cfg.policy.model._target_ = "diffusion_policy.model.diffusion.conditional_unet1d_flow.ConditionalUnet1D_Flow"
+        cfg.policy._target_ = "SI_policy.policy.diffusion_unet_lowdim_policy_flow_euler.DiffusionUnetLowdimPolicy_flow_euler"
+        cfg.policy.model._target_ = "SI_policy.model.diffusion.conditional_unet1d_flow.ConditionalUnet1D_Flow"
     
     # Policy parameters
     cfg.policy.path_type = args.path_type
