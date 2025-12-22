@@ -1,0 +1,44 @@
+# Data files (download separately)
+data/
+SIP/data/
+flow_label/
+diffusion_policy_l40s/
+diffusion_policy_l40s/*
+# Outputs and logs
+outputs/
+logs/
+wandb/
+*.log
+
+# Checkpoints
+*.ckpt
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env
