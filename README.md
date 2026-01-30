@@ -13,6 +13,8 @@
 
 ## Overview
 
+![DASIP Poster](assets/DASIP%20poster.png)
+
 ![DASIP Overview](assets/intro.png)
 
 Standard generative policies (diffusion or flow-based) employ a fixed inference budget for every control step, wasting resources on simple subtasks while potentially underperforming on hard ones.
@@ -255,9 +257,7 @@ wget -O flow_label.zip "https://www.dropbox.com/scl/fi/y72ccuu6lv3sdztqau0a3/dat
 unzip flow_label.zip -d flow_label/
 ```
 
-### Poster
 
-![DASIP Poster](assets/DASIP%20poster.png)
 
 ### Architecture Overview
 
