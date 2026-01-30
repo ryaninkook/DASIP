@@ -255,31 +255,6 @@ wget -O flow_label.zip "https://www.dropbox.com/scl/fi/y72ccuu6lv3sdztqau0a3/dat
 unzip flow_label.zip -d flow_label/
 ```
 
-## Troubleshooting
-
-### Classifier not found
-```
-Warning: Classifier not found at SIP/data/classifiers/square_cnn.pth
-```
-**Solution:** Train the classifier first:
-```bash
-python scripts/classifiers/train_cnn.py --env square
-```
-
-### Checkpoint not found
-```
-FileNotFoundError: Checkpoint not found: my_checkpoint
-```
-**Solution:** Check the path exists in `SIP/outputs/` or use full path.
-
-### CUDA out of memory
-**Solution:** Reduce batch size:
-```bash
-./scripts/run_train.sh --env square --batch_size 128
-```
-
-## Resources
-
 ### Poster
 
 ![DASIP Poster](assets/DASIP%20poster.png)
