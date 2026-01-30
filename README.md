@@ -95,8 +95,8 @@ DASIP/
 ├── README.md
 ├── assets/                     # Documentation assets
 │   ├── intro.png               # Overview figure
-│   ├── DASIP_poster.pdf       # Project poster
-│   └── overview.pdf            # Architecture diagram
+│   ├── DASIP poster.png        # Project poster
+│   └── overview.png            # Architecture diagram
 ├── scripts/
 │   ├── download_data.py        # Download datasets and models
 │   ├── train.py                # Train SI policy
@@ -236,97 +236,6 @@ python scripts/process_results.py \
     --output results.csv
 ```
 
-## Configuration Options
-
-### Stochastic Interpolant Training (`run_train.sh`)
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--env` | Environment name | `square` |
-| `--path_type` | Interpolant type: `Linear` (Flow), `VP` (Diffusion), `GVP` | `Linear` |
-| `--prediction` | Prediction target: `velocity`, `score`, or `noise` | `velocity` |
-| `--num_epochs` | Training epochs | `5000` |
-| `--batch_size` | Batch size | `256` |
-| `--lr` | Learning rate | `1e-4` |
-| `--checkpoint_every` | Save frequency | `50` |
-| `--seed` | Random seed | `42` |
-
-### Adaptive Inference (`run_dasip.sh`)
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--env` | Environment name | required |
-| `--checkpoint` | Checkpoint path | required |
-| `--classifier` | Path to trained classifier (CNN/VLM) | auto-detect |
-| `--solver_config` | JSON map of Difficulty → (Steps, Solver, Mode) | default schedule |
-| `--use_sde` | Enable stochastic integration (SDE) for hard states | `true` |
-| `--compare_baseline` | Run baseline comparison | `false` |
-| `--num_episodes` | Evaluation episodes | `50` |
-
-### Supported Environments
-
-| Environment | Task | Difficulty States |
-|-------------|------|-------------------|
-| `square` | Square nut assembly | I, N, G, S, C, E |
-| `can` | Can picking | I, N, G, S, C, E |
-| `lift` | Object lifting | I, N, G, S, C, E |
-| `pusht` | Push-T | I, N, G, S, C, E |
-| `tool_hang` | Tool hanging | I, N, G, S, C, E |
-| `transport` | Two-arm transport | I, N, G, S, C, E |
-
-**Difficulty state codes:** I=Initial, N=Near, G=Grabbing, S=Stochastic, C=Continuous, E=End
-
-## Results
-
-### Success Rate Comparison (from Table 5)
-
-| Environment | Min Compute | Max Compute | DASIP (CNN) | Few-shot VLM | Fine-tuned VLM |
-|-------------|-------------|-------------|--------------|--------------|----------------|
-| Tool Hang | 25% | 25% | 27% (+2%) | 33% (+8%) | 33% (+8%) |
-| Square | 88% | 90% | 92% (+2%) | 88% (-2%) | 89% (-1%) |
-| Transport | 62% | 80% | 77% (-3%) | 62% (-18%) | 79% (-1%) |
-| Push-T | 81% | 86% | 87% (+1%) | 86% (0%) | 87% (+1%) |
-| Lift | 100% | 100% | 100% (0%) | 100% (0%) | 100% (0%) |
-| Can | 98% | 99% | 99% (0%) | 99% (0%) | 99% (0%) |
-
-### Computational Efficiency - Speedup vs. Max Compute (from Table 4)
-
-| Environment | CNN Classifier | Few-shot VLM | Fine-tuned VLM |
-|-------------|----------------|--------------|----------------|
-| Tool Hang | **3.22×** | 2.28× | 2.45× |
-| Square | **2.61×** | 1.65× | 1.35× |
-| Transport | **4.43×** | 1.92× | 2.10× |
-| Push-T | 2.69× | **5.55×** | 2.69× |
-| Lift | **4.09×** | 2.61× | 2.94× |
-| Can | **2.89×** | 2.26× | 2.49× |
-
-### Time Comparison in Seconds (from Table 4)
-
-| Environment | Min Compute | Max Compute | DASIP (CNN) |
-|-------------|-------------|-------------|--------------|
-| Tool Hang | 91.02 | 342.13 | 106.37 |
-| Square | 25.86 | 146.68 | 56.20 |
-| Transport | 73.04 | 342.54 | 77.36 |
-| Push-T | 1.44 | 121.89 | 45.35 |
-| Lift | 57.04 | 263.28 | 64.31 |
-| Can | 63.70 | 214.81 | 74.32 |
-
-**Key findings:**
-- CNN classifier achieves best balance of speed (avg **3.3×** speedup) and accuracy (avg **0.3%** difference from max compute)
-- Fine-tuned VLM offers **2.3×** speedup with **1.8%** performance difference
-- Simple tasks (Lift, Can) achieve near-perfect success even with minimal compute (1 step)
-
-### Classifier Accuracy (from Table 2)
-
-| Environment | CNN | Few-shot VLM (Qwen2.5) | Fine-tuned VLM |
-|-------------|-----|------------------------|----------------|
-| Can | 88.9% | 37.5% | 47.5% |
-| Lift | 92.8% | 83.3% | 86.7% |
-| Push-T | 94.6% | 42.0% | 56.7% |
-| Square | 87.4% | 26.0% | 52.0% |
-| Tool Hang | 81.3% | 50.0% | 40.0% |
-| Transport | 91.5% | 30.0% | 40.0% |
-
 ## Manual Data Download
 
 If automatic download fails:
@@ -371,8 +280,13 @@ FileNotFoundError: Checkpoint not found: my_checkpoint
 
 ## Resources
 
-- [DASIP Poster (PDF)](assets/DASIP_poster.pdf)
-- [Overview Diagram (PDF)](assets/overview.pdf)
+### Poster
+
+![DASIP Poster](assets/DASIP%20poster.png)
+
+### Architecture Overview
+
+![Overview Diagram](assets/overview.png)
 
 ## Citation
 
@@ -389,12 +303,4 @@ If you use DASIP in your research, please cite our NeurIPS 2025 paper:
 
 ## Acknowledgments
 
-We thank the authors of Stochastic Interpolant and SiT for their paper and codebase, which served as the foundation of our research. We are also grateful for the authors of the Diffusion Policy codebase, which was instrumental for our implementation.
-
-We thank Sanghyun Woo for valuable early discussions on research methodology and comparative analysis, and Nur Muhammad Mahi Shafiullah for insightful discussions on robotics experiment design and ensuring fair comparisons with baseline methods. We thank Lerrel Pinto and Mark Goldstein for helpful feedback on the draft and experiments.
-
-This work was supported by compute resources provided by NYU IT High Performance Computing resources and services.
-
-## License
-
-MIT License - see LICENSE file.
+We thank the authors of Stochastic Interpolant, SiT, and Diffusion Policy for their foundational codebases. We appreciate the valuable discussions and feedback from Sanghyun Woo, Nur Muhammad Mahi Shafiullah, Lerrel Pinto, and Mark Goldstein. This work was supported by NYU IT High Performance Computing resources.

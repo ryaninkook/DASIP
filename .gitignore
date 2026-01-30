@@ -9,7 +9,7 @@ outputs/
 logs/
 wandb/
 *.log
-
+diffusion_policy_l40s/
 # Checkpoints
 *.ckpt
 *.pt
