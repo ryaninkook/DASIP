@@ -1,5 +1,0 @@
-
-
-# only do the last TS 100
-
-diffusion_policy/run2/run4_sh/linear/transport/transport_linear_ode.sh
