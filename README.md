@@ -17,7 +17,7 @@
 
 Standard generative policies (diffusion or flow-based) employ a fixed inference budget for every control step, wasting resources on simple subtasks while potentially underperforming on hard ones.
 
-**DASIP** introduces a **Stochastic Interpolant (SI)** framework that unifies ODE (Flow) and SDE (Diffusion) formulations. It uses a lightweight **difficulty classifier** to analyze observations in real-time and dynamically selects an optimal **Inference Configuration Triple**:
+**DASIP** introduces a **Stochastic Interpolant (SI)** framework that unifies diffusion and flow based model formulations. It uses a lightweight **difficulty classifier** to analyze observations in real-time and dynamically selects an optimal **Inference Configuration Triple**:
 
 $$\langle \text{Step Count}, \text{Solver Type}, \text{ODE/SDE Integration} \rangle$$
 
