@@ -15,8 +15,6 @@
 
 ![DASIP Poster](assets/DASIP%20poster.png)
 
-![DASIP Overview](assets/intro.png)
-
 Standard generative policies (diffusion or flow-based) employ a fixed inference budget for every control step, wasting resources on simple subtasks while potentially underperforming on hard ones.
 
 **DASIP** introduces a **Stochastic Interpolant (SI)** framework that unifies diffusion and flow based model formulations. It uses a lightweight **difficulty classifier** to analyze observations in real-time and dynamically selects an optimal **Inference Configuration Triple**:
@@ -37,6 +35,8 @@ This is analogous to "System 1 vs. System 2" thinking in cognitive science—fas
 | **End (E)** | Task objectives achieved | Minimal | 1, Euler, ODE |
 
 This approach achieves **2.6–4.4× reduction in computation time** while maintaining or exceeding state-of-the-art success rates.
+
+![DASIP Overview](assets/intro.png)
 
 ## Stochastic Interpolant Framework
 
