@@ -238,6 +238,21 @@ python scripts/process_results.py \
     --output results.csv
 ```
 
+## Tests
+
+CPU-only tests for the stochastic-interpolant samplers (no simulator, data or GPU):
+
+```bash
+pip install -r tests/requirements.txt
+python -m pytest tests -q
+
+# SDE sampling cost per action chunk, real U-Net at Square low-dim sizes
+python scripts/bench_sde_sampler.py
+```
+
+Note that `num_steps` (the policy's `TS`) counts time-grid points including both
+endpoints: a fixed-step ODE solver takes `TS - 1` steps, so one Euler step is `TS=2`.
+
 ## Manual Data Download
 
 If automatic download fails:
