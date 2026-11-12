@@ -1,0 +1,7 @@
+# CPU-only test dependencies (no simulator, dataset or GPU needed).
+torch
+torchdiffeq
+numpy
+tqdm
+einops
+pytest

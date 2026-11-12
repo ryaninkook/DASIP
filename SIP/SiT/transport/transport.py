@@ -212,6 +212,22 @@ class Transport:
         return score_fn
 
 
+_ODE_METHOD_ALIASES = {"heun": "heun2"}
+
+
+def _check_num_steps(num_steps):
+    """num_steps counts time-grid points including both endpoints, so a fixed-step
+    solver takes num_steps - 1 steps. With num_steps=1 the grid is [t0] alone: the
+    ODE sampler would return the initial noise unchanged (0 network evaluations),
+    and the SDE sampler would fail with an unrelated error."""
+    if int(num_steps) < 2:
+        raise ValueError(
+            f"num_steps={num_steps}: the time grid needs at least 2 points (t0 and t1). "
+            "num_steps counts grid points, so a fixed-step solver takes num_steps - 1 "
+            "steps; use num_steps=2 for a single step."
+        )
+
+
 class Sampler:
     """Sampler class for the transport model"""
     def __init__(
@@ -243,10 +259,15 @@ class Sampler:
             diffusion = self.transport.path_sampler.compute_diffusion(x, t, form=diffusion_form, norm=diffusion_norm)
             return diffusion
         
-        sde_drift = \
-            lambda x, t, model, **kwargs: \
-                self.drift(x, t, model, **kwargs) + diffusion_fn(x, t) * self.score(x, t, model, **kwargs)
-    
+        def sde_drift(x, t, model, **kwargs):
+            # The probability-flow drift and the score are both functions of the
+            # same network output at (x, t). Evaluate the network once and hand
+            # that output to both, instead of running the identical forward pass
+            # twice. The result is bit-identical; the SDE costs half the NFE.
+            model_output = model(x, t, **kwargs)
+            cached_model = lambda *_args, **_kwargs: model_output
+            return self.drift(x, t, cached_model) + diffusion_fn(x, t) * self.score(x, t, cached_model)
+
         sde_diffusion = diffusion_fn
 
         return sde_drift, sde_diffusion
@@ -302,6 +323,7 @@ class Sampler:
         - last_step_size: size of the last step; default to match the stride of 250 steps over [0,1]
         - num_steps: total integration step of SDE
         """
+        _check_num_steps(num_steps)
 
         if last_step is None:
             # last_step_size = 0.0
@@ -378,6 +400,10 @@ class Sampler:
         - rtol: relative error tolerance for the solver
         - reverse: whether solving the ODE in reverse (data to noise); default to False
         """
+        _check_num_steps(num_steps)
+        # torchdiffeq names Heun's method "heun2"; the policies pass "heun"
+        # (DDPM.lower()), which torchdiffeq rejects with "Invalid method".
+        sampling_method = _ODE_METHOD_ALIASES.get(sampling_method, sampling_method)
         if reverse:
             drift = lambda x, t, model, **kwargs: self.drift(x, th.ones_like(t) * (1 - t), model, **kwargs)
         else:
